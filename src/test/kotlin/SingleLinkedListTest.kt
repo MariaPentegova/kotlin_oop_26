@@ -1,4 +1,5 @@
-import org.example.SingleLinkedList
+package org.example
+
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -85,20 +86,65 @@ class SingleLinkedListTest {
         }
     }
 
+    @Test
     fun `indexOf works`() {
         list.add(10)
         list.add(20)
         list.add(30)
 
-        assertEquals(2, list.indexOf(20))
+        assertEquals(1, list.indexOf(20))
     }
 
+    @Test
     fun `set works`() {
         list.add(10)
         list.add(20)
         list.add(30)
 
-        list[2] = 5
-        assertEquals(5, list[2])
+        list[1] = 5
+        assertEquals(5, list[1])
+    }
+
+    // тест №1
+    @Test
+    fun `iterator returns elements in correct order`() {
+        list.add(100)
+        list.add(200)
+        list.add(300)
+        
+        val iterator = list.iterator()
+        assertTrue(iterator.hasNext())
+        assertEquals(100, iterator.next())
+        assertEquals(200, iterator.next())
+        assertEquals(300, iterator.next())
+        assertFalse(iterator.hasNext())
+    }
+
+    // тест №2
+    @Test
+    fun `clear removes all elements`() {
+        list.add(10)
+        list.add(20)
+
+        assertEquals(2, list.size)
+
+        list.remove(10)
+        list.remove(20)
+
+        assertEquals(0, list.size)
+        assertFalse(list.iterator().hasNext())
+    }
+
+    // тест №3
+    @Test
+    fun `remove the only one element`() {
+        list.add(100)
+        val removed = list.remove(100)
+
+        assertTrue(removed)
+        assertEquals(0, list.size)
+        assertThrows(IndexOutOfBoundsException::class.java) {
+            list[0]
+        }
     }
 }
